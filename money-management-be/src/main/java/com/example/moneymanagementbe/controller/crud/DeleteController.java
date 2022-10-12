@@ -1,4 +1,4 @@
-package com.example.moneymanagementbe.controller;
+package com.example.moneymanagementbe.controller.crud;
 
 import com.example.moneymanagementbe.dto.BaseDto;
 import com.example.moneymanagementbe.entity.BaseEntity;
