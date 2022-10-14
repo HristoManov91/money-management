@@ -2,6 +2,7 @@ package com.example.moneymanagementbe.dto;
 
 import com.example.moneymanagementbe.entity.enums.GenderEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -18,8 +19,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Schema(name = "User", description = "User description")
 public class UserDto extends BaseDto {
 
+    //TODO @Schema()
     String username;
     String password;
     String fullName;
