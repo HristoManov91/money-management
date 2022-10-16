@@ -1,7 +1,6 @@
 package com.example.moneymanagementbe.entity;
 
 import com.example.moneymanagementbe.entity.enums.GenderEnum;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -16,7 +15,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.asm.Advice.Local;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
@@ -46,7 +44,7 @@ public class UserEntity extends BaseEntity {
     String email;
 
     @Column(name = "gender", nullable = false, length = 10)
-    GenderEnum gender;
+    GenderEnum genderEnum;
 
     @CreationTimestamp
     @Column(name = "create_date", updatable = false, nullable = false, columnDefinition = "timestamp(0)")
@@ -62,13 +60,13 @@ public class UserEntity extends BaseEntity {
         }
         UserEntity that = (UserEntity) o;
         return getUsername().equals(that.getUsername()) && Objects.equals(getPassword(), that.getPassword()) && getFullName().equals(that.getFullName())
-            && getDateOfBirth().equals(that.getDateOfBirth()) && getEmail().equals(that.getEmail()) && getGender() == that.getGender()
+            && getDateOfBirth().equals(that.getDateOfBirth()) && getEmail().equals(that.getEmail()) && getGenderEnum() == that.getGenderEnum()
             && getCreateDate().equals(
             that.getCreateDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(), getPassword(), getFullName(), getDateOfBirth(), getEmail(), getGender(), getCreateDate());
+        return Objects.hash(getUsername(), getPassword(), getFullName(), getDateOfBirth(), getEmail(), getGenderEnum(), getCreateDate());
     }
 }
