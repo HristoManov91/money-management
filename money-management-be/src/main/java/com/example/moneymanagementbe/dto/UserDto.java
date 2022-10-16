@@ -22,13 +22,13 @@ import lombok.experimental.FieldDefaults;
 @Schema(name = "User", description = "User description")
 public class UserDto extends BaseDto {
 
-    //TODO @Schema()
+    //TODO validations
     String username;
     String password;
     String fullName;
     LocalDate dateOfBirth;
     String email;
-    GenderEnum gender;
+    GenderEnum genderEnum;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime createDate;
 }
