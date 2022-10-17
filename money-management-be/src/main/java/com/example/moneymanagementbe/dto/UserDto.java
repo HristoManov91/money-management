@@ -28,7 +28,7 @@ public class UserDto extends BaseDto {
     String fullName;
     LocalDate dateOfBirth;
     String email;
-    GenderEnum genderEnum;
+    String gender;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime createDate;
 }

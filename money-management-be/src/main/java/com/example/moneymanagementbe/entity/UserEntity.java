@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -43,8 +45,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", nullable = false, length = 50, unique = true)
     String email;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "gender", nullable = false, length = 10)
-    GenderEnum genderEnum;
+    GenderEnum gender;
 
     @CreationTimestamp
     @Column(name = "create_date", updatable = false, nullable = false, columnDefinition = "timestamp(0)")
@@ -59,14 +62,14 @@ public class UserEntity extends BaseEntity {
             return false;
         }
         UserEntity that = (UserEntity) o;
-        return getUsername().equals(that.getUsername()) && Objects.equals(getPassword(), that.getPassword()) && getFullName().equals(that.getFullName())
-            && getDateOfBirth().equals(that.getDateOfBirth()) && getEmail().equals(that.getEmail()) && getGenderEnum() == that.getGenderEnum()
+        return getUsername().equals(that.getUsername()) && getPassword().equals(that.getPassword()) && getFullName().equals(that.getFullName())
+            && getDateOfBirth().equals(that.getDateOfBirth()) && getEmail().equals(that.getEmail()) && getGender() == that.getGender()
             && getCreateDate().equals(
             that.getCreateDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(), getPassword(), getFullName(), getDateOfBirth(), getEmail(), getGenderEnum(), getCreateDate());
+        return Objects.hash(getUsername(), getPassword(), getFullName(), getDateOfBirth(), getEmail(), getGender(), getCreateDate());
     }
 }

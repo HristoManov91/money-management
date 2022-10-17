@@ -1,6 +1,7 @@
 package com.example.moneymanagementbe.entity;
 
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,10 +31,10 @@ public class StoreEntity extends BaseEntity {
     @Column(name = "name", length = 100, nullable = false)
     String name;
 
-    @OneToOne(targetEntity = AddressEntity.class, fetch = FetchType.LAZY, optional = false)//TODO cascade
+    @OneToOne(targetEntity = AddressEntity.class, fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     AddressEntity address;
 
-    @ManyToOne(targetEntity = UserEntity.class, optional = false, fetch = FetchType.LAZY)//TODO cascade
+    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY, optional = false,  cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     UserEntity user;
 
     @Override

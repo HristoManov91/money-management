@@ -1,5 +1,6 @@
 package com.example.moneymanagementbe.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -31,4 +32,22 @@ public class AddressEntity extends BaseEntity {
 
     @Column(name = "street", length = 100)
     String street;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AddressEntity)) {
+            return false;
+        }
+        AddressEntity that = (AddressEntity) o;
+        return Objects.equals(getCountry(), that.getCountry()) && Objects.equals(getCity(), that.getCity()) && Objects.equals(
+            getStreet(), that.getStreet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCountry(), getCity(), getStreet());
+    }
 }

@@ -31,7 +31,7 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne(targetEntity = ProductNameEntity.class, optional = false)//TODO cascade
     ProductNameEntity productName;
 
-    @Column(name = "price", nullable = false, scale = 2)
+    @Column(name = "standard_price", nullable = false, scale = 2)
     BigDecimal standardPrice;
 
     @Column(name = "price_discount", scale = 2)
