@@ -20,7 +20,7 @@ public class ReceiptSearchStrategy implements SearchStrategy<QReceiptEntity> {
         predicateBuilder.and(restPredicate);
 
         if (nonNull(criteria)) {
-            return predicateBuilder.andAnyOf(
+            predicateBuilder.andAnyOf(
                 qEntity.description.containsIgnoreCase(criteria)
                 //TODO if i need more fields check for criteria and inner object
             );

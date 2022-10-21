@@ -31,10 +31,18 @@ public class StoreEntity extends BaseEntity {
     @Column(name = "name", length = 100, nullable = false)
     String name;
 
-    @OneToOne(targetEntity = AddressEntity.class, fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @OneToOne(
+        targetEntity = AddressEntity.class,
+        fetch = FetchType.LAZY,
+        optional = false,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     AddressEntity address;
 
-    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY, optional = false,  cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToOne(
+        targetEntity = UserEntity.class,
+        fetch = FetchType.LAZY,
+        optional = false,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     UserEntity user;
 
     @Override

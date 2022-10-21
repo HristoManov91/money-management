@@ -19,13 +19,12 @@ import lombok.experimental.FieldDefaults;
 public class ProductDto extends BaseDto {
 
     //TODO validations
-    ProductNameDto productName;
+    ProductTypeDto productType;
     BigDecimal standardPrice;
     BigDecimal priceDiscount;
     BigDecimal percentDiscount;
     BigDecimal price;
     BigDecimal quantity;
     BigDecimal totalPrice;
-    CategoryDto category;
     LocalDate expirationDate;
 }

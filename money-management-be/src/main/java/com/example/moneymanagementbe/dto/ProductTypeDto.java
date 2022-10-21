@@ -14,10 +14,11 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductNameDto extends BaseDto {
+public class ProductTypeDto extends BaseDto {
 
     //TODO validations
     String name;
     String brand;
+    CategoryDto category;
     UserDto user;
 }

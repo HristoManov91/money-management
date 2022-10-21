@@ -3,9 +3,9 @@ package com.example.moneymanagementbe.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -28,8 +28,11 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "products")
 public class ProductEntity extends BaseEntity {
 
-    @ManyToOne(targetEntity = ProductNameEntity.class, optional = false)//TODO cascade
-    ProductNameEntity productName;
+    @ManyToOne(
+        targetEntity = ProductTypeEntity.class,
+        optional = false,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    ProductTypeEntity productType;
 
     @Column(name = "standard_price", nullable = false, scale = 2)
     BigDecimal standardPrice;
@@ -49,9 +52,6 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "total_price", nullable = false, scale = 2)
     BigDecimal totalPrice;
 
-    @ManyToOne(targetEntity = CategoryEntity.class, optional = false, fetch = FetchType.EAGER)//TODO cascade
-    CategoryEntity category;
-
     @Column(name = "expiration_date")
     LocalDate expirationDate;
 
@@ -64,15 +64,15 @@ public class ProductEntity extends BaseEntity {
             return false;
         }
         ProductEntity that = (ProductEntity) o;
-        return getProductName().equals(that.getProductName()) && getStandardPrice().equals(that.getStandardPrice()) && Objects.equals(getPriceDiscount(),
-            that.getPriceDiscount()) && Objects.equals(getPercentDiscount(), that.getPercentDiscount()) && getPrice().equals(that.getPrice())
-            && getQuantity().equals(that.getQuantity()) && getTotalPrice().equals(that.getTotalPrice()) && getCategory().equals(that.getCategory())
-            && Objects.equals(getExpirationDate(), that.getExpirationDate());
+        return Objects.equals(getProductType(), that.getProductType()) && Objects.equals(getStandardPrice(), that.getStandardPrice())
+            && Objects.equals(getPriceDiscount(), that.getPriceDiscount()) && Objects.equals(getPercentDiscount(), that.getPercentDiscount())
+            && Objects.equals(getPrice(), that.getPrice()) && Objects.equals(getQuantity(), that.getQuantity()) && Objects.equals(
+            getTotalPrice(), that.getTotalPrice()) && Objects.equals(getExpirationDate(), that.getExpirationDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getProductName(), getStandardPrice(), getPriceDiscount(), getPercentDiscount(), getPrice(), getQuantity(), getTotalPrice(),
-            getCategory(), getExpirationDate());
+        return Objects.hash(getProductType(), getStandardPrice(), getPriceDiscount(), getPercentDiscount(), getPrice(), getQuantity(), getTotalPrice(),
+            getExpirationDate());
     }
 }

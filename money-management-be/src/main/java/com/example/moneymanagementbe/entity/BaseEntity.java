@@ -1,6 +1,5 @@
 package com.example.moneymanagementbe.entity;
 
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

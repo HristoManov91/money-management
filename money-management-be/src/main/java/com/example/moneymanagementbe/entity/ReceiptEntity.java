@@ -3,6 +3,7 @@ package com.example.moneymanagementbe.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,13 +30,20 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "receipts")
 public class ReceiptEntity extends BaseEntity {
 
-    @Column(name = "date" , nullable = false)
+    @Column(name = "date", nullable = false)
     LocalDate date;
 
-    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY, optional = false)//TODO cascade
+    @ManyToOne(
+        targetEntity = UserEntity.class,
+        fetch = FetchType.LAZY,
+        optional = false,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     UserEntity user;
 
-    @OneToMany(targetEntity = ProductEntity.class, fetch = FetchType.EAGER)//TODO cascade
+    @OneToMany(
+        targetEntity = ProductEntity.class,
+        fetch = FetchType.EAGER,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     List<ProductEntity> products;
 
     @Column(name = "total_price", scale = 2)
@@ -47,7 +55,11 @@ public class ReceiptEntity extends BaseEntity {
     @Column(name = "description")
     String description;
 
-    @ManyToOne(targetEntity = StoreEntity.class, fetch = FetchType.EAGER, optional = false)//TODO cascade
+    @ManyToOne(
+        targetEntity = StoreEntity.class,
+        fetch = FetchType.EAGER,
+        optional = false,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     StoreEntity store;
 
 

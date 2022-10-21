@@ -1,6 +1,7 @@
 package com.example.moneymanagementbe.entity;
 
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,11 @@ public class CategoryEntity extends BaseEntity {
     @Column(name = "name", nullable = false, length = 50)
     String name;
 
-    @ManyToOne(targetEntity = UserEntity.class, optional = false, fetch = FetchType.LAZY)//TODO cascade
+    @ManyToOne(
+        targetEntity = UserEntity.class,
+        optional = false,
+        fetch = FetchType.LAZY,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     UserEntity user;
 
     @Override

@@ -1,26 +1,28 @@
-package com.example.moneymanagementbe.controller.store;
+package com.example.moneymanagementbe.controller.productType;
 
 import static java.util.Objects.nonNull;
 
 import com.example.moneymanagementbe.controller.SearchStrategy;
-import com.example.moneymanagementbe.entity.QStoreEntity;
+import com.example.moneymanagementbe.entity.QProductTypeEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StoreSearchStrategy implements SearchStrategy<QStoreEntity> {
+public class ProductTypeSearchStrategy implements SearchStrategy<QProductTypeEntity> {
 
     @Override
     public Predicate getCustomPredicate(Predicate restPredicate, String criteria) {
         BooleanBuilder predicateBuilder = new BooleanBuilder();
-        QStoreEntity qEntity = QStoreEntity.storeEntity;
+        QProductTypeEntity qEntity = QProductTypeEntity.productTypeEntity;
         predicateBuilder.and(restPredicate);
 
-        if (nonNull(criteria)) {
+        if (nonNull(criteria)){
             predicateBuilder.andAnyOf(
-                qEntity.name.containsIgnoreCase(criteria)
+                qEntity.name.containsIgnoreCase(criteria),
+                qEntity.brand.containsIgnoreCase(criteria),
+                qEntity.category.name.containsIgnoreCase(criteria)
             );
         }
 
@@ -28,6 +30,7 @@ public class StoreSearchStrategy implements SearchStrategy<QStoreEntity> {
     }
 
     @Override
-    public void customize(QuerydslBindings bindings, QStoreEntity root) {
+    public void customize(QuerydslBindings bindings, QProductTypeEntity root) {
+
     }
 }

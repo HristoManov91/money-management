@@ -1,6 +1,7 @@
 package com.example.moneymanagementbe.entity;
 
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "products_names")
-public class ProductNameEntity extends BaseEntity {
+public class ProductTypeEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false, length = 50)
     String name;
@@ -32,7 +33,18 @@ public class ProductNameEntity extends BaseEntity {
     @Column(name = "brand", length = 50)
     String brand;
 
-    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY, optional = false)//TODO cascade
+    @ManyToOne(
+        targetEntity = CategoryEntity.class,
+        optional = false,
+        fetch = FetchType.EAGER,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    CategoryEntity category;
+
+    @ManyToOne(
+        targetEntity = UserEntity.class,
+        fetch = FetchType.LAZY,
+        optional = false,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     UserEntity user;
 
     @Override
@@ -40,15 +52,16 @@ public class ProductNameEntity extends BaseEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ProductNameEntity)) {
+        if (!(o instanceof ProductTypeEntity)) {
             return false;
         }
-        ProductNameEntity that = (ProductNameEntity) o;
-        return getName().equals(that.getName()) && Objects.equals(getBrand(), that.getBrand()) && getUser().equals(that.getUser());
+        ProductTypeEntity that = (ProductTypeEntity) o;
+        return Objects.equals(getName(), that.getName()) && Objects.equals(getBrand(), that.getBrand()) && Objects.equals(
+            getCategory(), that.getCategory()) && Objects.equals(getUser(), that.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getBrand(), getUser());
+        return Objects.hash(getName(), getBrand(), getCategory(), getUser());
     }
 }
