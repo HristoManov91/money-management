@@ -1,5 +1,7 @@
 package com.example.money_management_be.entity;
 
+import static java.util.Objects.nonNull;
+
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +46,7 @@ public class ProductTypeEntity extends BaseEntity {
 
     @ManyToOne(
         targetEntity = ProductCategoryEntity.class,
-        fetch = FetchType.LAZY,
+        fetch = FetchType.EAGER,
         optional = false,
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
@@ -80,6 +82,8 @@ public class ProductTypeEntity extends BaseEntity {
 
     @PrePersist
     private void prePersist() {
-        this.category.setUser(this.getUser());
+        if (nonNull(this.category) && this.category.getUser() == null){
+            this.category.setUser(this.getUser());
+        }
     }
 }

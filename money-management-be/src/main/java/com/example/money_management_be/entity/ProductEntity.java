@@ -1,12 +1,16 @@
 package com.example.money_management_be.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,8 +20,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
@@ -28,6 +30,23 @@ import org.hibernate.annotations.FetchMode;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "products")
+@NamedEntityGraph(
+    name = "join-productType",
+    attributeNodes = {
+        @NamedAttributeNode(
+            value = "productType",
+            subgraph = "productType.category"
+        )
+    },
+    subgraphs = {
+        @NamedSubgraph(
+            name = "productType.category",
+            attributeNodes = {
+                @NamedAttributeNode("category")
+            }
+        )
+    }
+)
 public class ProductEntity extends BaseEntity {
 
     @ManyToOne(
@@ -36,7 +55,6 @@ public class ProductEntity extends BaseEntity {
         optional = false,
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
-    @Fetch(FetchMode.JOIN)
     ProductTypeEntity productType;
 
     @Column(name = "standard_price", nullable = false, scale = 2)
@@ -56,6 +74,9 @@ public class ProductEntity extends BaseEntity {
 
     @Column(name = "total_price", nullable = false, scale = 2)
     BigDecimal totalPrice;
+
+    @Column(name = "date", nullable = false)
+    LocalDate date;
 
     @Override
     public boolean equals(Object o) {

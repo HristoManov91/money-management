@@ -1,5 +1,7 @@
 package com.example.money_management_be.entity;
 
+import static java.util.Objects.nonNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -112,5 +115,15 @@ public class ExpenseEntity extends BaseEntity {
     public int hashCode() {
         return Objects.hash(getId(), getCategory().getId(), getSubCategory().getId(), getDate(), getUser().getId(), getPrice(),
                             getDiscount(), getDescription(), getStore().getId());
+    }
+
+    @PrePersist
+    private void prePersist() {
+        if (nonNull(this.products)){
+            this.products.forEach(p -> {
+                p.getProductType().setUser(this.user);
+                p.setDate(this.date);
+            });
+        }
     }
 }
