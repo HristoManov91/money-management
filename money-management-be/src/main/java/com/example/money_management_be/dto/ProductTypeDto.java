@@ -19,6 +19,6 @@ public class ProductTypeDto extends BaseDto {
     //TODO validations
     String name;
     String brand;
-    ProductCategoryDto category;
+    String category;
     Long userId;
 }

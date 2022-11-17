@@ -74,4 +74,6 @@ public class ProductEntity extends BaseEntity {
     public int hashCode() {
         return Objects.hash(getProductType().getId(), getId());
     }
+
+
 }

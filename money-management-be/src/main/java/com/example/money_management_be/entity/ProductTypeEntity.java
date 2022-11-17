@@ -5,10 +5,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,8 +18,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
@@ -45,10 +43,10 @@ public class ProductTypeEntity extends BaseEntity {
     String brand;
 
     @ManyToOne(
-        fetch = FetchType.EAGER,
         targetEntity = ProductCategoryEntity.class,
+        fetch = FetchType.LAZY,
         optional = false,
-        cascade = {CascadeType.MERGE, CascadeType.DETACH}
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
     ProductCategoryEntity category;
 
@@ -78,5 +76,10 @@ public class ProductTypeEntity extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getBrand(), getCategory().getId(), getUser().getId());
+    }
+
+    @PrePersist
+    private void prePersist() {
+        this.category.setUser(this.getUser());
     }
 }

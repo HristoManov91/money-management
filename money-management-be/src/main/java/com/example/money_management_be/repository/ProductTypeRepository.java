@@ -6,14 +6,16 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductTypeRepository extends BaseRepository<ProductTypeEntity, Long>{
+public interface ProductTypeRepository extends BaseRepository<ProductTypeEntity, Long> {
 
     @EntityGraph(value = "join-category")
     Optional<ProductTypeEntity> findById(Long id);
+
+    @EntityGraph(value = "join-category")
+    Optional<ProductTypeEntity> findByNameAndBrandAndUserId(String name, String brand, Long userId);
 
     @EntityGraph(value = "join-category")
     Page<ProductTypeEntity> findAll(Predicate predicate, Pageable pageable);

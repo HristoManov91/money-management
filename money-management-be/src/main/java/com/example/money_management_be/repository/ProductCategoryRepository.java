@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductCategoryRepository extends BaseRepository<ProductCategoryEntity, Long>{
 
+    Optional<ProductCategoryEntity> findByNameAndUserId(String name, Long userId);
 }
