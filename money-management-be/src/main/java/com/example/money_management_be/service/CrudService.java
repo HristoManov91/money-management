@@ -18,11 +18,12 @@ public interface CrudService<D extends BaseDto, E extends BaseEntity> {
     ResourceEntityTransformer<D, E> resourceTransformer();
 
     default D save(D dto) {
-        E e = resourceTransformer().transformToEntity(dto);
-        E save = repository().save(e);
-        D d = resourceTransformer().transformToResource(save);
-        return d;
-//        return resourceTransformer().transformToResource(repository().save(resourceTransformer().transformToEntity(dto)));
+        //TODO to pass UserEntity as well
+//        E e = resourceTransformer().transformToEntity(dto);
+//        E save = repository().save(e);
+//        D d = resourceTransformer().transformToResource(save);
+//        return d;
+        return resourceTransformer().transformToResource(repository().save(resourceTransformer().transformToEntity(dto)));
     }
 
     default D saveAndFlush(D dto) {

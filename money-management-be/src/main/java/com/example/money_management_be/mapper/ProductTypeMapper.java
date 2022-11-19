@@ -13,11 +13,11 @@ public interface ProductTypeMapper extends ResourceEntityTransformer<ProductType
 
     @Override
     @Mapping(target = "userId", source = "entity.user.id")
-    @Mapping(target = "category", source = "entity.category.name")
+    @Mapping(target = "productCategory", source = "entity.productCategory.name")
     ProductTypeDto transformToResource(ProductTypeEntity entity);
 
     @Override
     @Mapping(target = "user", source = "userId", qualifiedByName = "FromIdToUser")
-    @Mapping(target = "category", source = "resource", qualifiedByName = "FromNameAndUserId")
+    @Mapping(target = "productCategory", source = "resource", qualifiedByName = "FromNameAndUserId")
     ProductTypeEntity transformToEntity(ProductTypeDto resource);
 }

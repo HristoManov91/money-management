@@ -1,5 +1,7 @@
 package com.example.money_management_be.mapper.qualifiers;
 
+import static java.util.Objects.nonNull;
+
 import com.example.money_management_be.dto.ProductTypeDto;
 import com.example.money_management_be.entity.ProductCategoryEntity;
 import com.example.money_management_be.repository.ProductCategoryRepository;
@@ -21,9 +23,9 @@ public class ProductCategoryQualifier {
 
     @Named("FromNameAndUserId")
     public ProductCategoryEntity fromNameAndUserId(ProductTypeDto dto) {
-        String categoryName = dto.getCategory();
+        String categoryName = dto.getProductCategory();
         Long userId = dto.getUserId();
-        if (categoryName != null && userId != null) {
+        if (nonNull(categoryName) && nonNull(userId)) {
             Optional<ProductCategoryEntity> userOptional = repository.findByNameAndUserId(categoryName, userId);
             return userOptional.orElseGet(() -> new ProductCategoryEntity(categoryName, userRepository.findById(userId).get()));
         }

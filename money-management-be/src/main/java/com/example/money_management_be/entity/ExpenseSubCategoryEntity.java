@@ -15,14 +15,12 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"expenseCategory"})
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -36,9 +34,8 @@ public class ExpenseSubCategoryEntity extends BaseEntity {
         targetEntity = ExpenseCategoryEntity.class,
         optional = false,
         fetch = FetchType.LAZY,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
+        cascade = {CascadeType.MERGE, CascadeType.DETACH}
     )
-    @Fetch(FetchMode.JOIN)
     ExpenseCategoryEntity expenseCategory;
 
     @Override

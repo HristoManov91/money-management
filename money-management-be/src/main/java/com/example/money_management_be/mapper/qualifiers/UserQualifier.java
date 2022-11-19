@@ -1,5 +1,7 @@
 package com.example.money_management_be.mapper.qualifiers;
 
+import static java.util.Objects.nonNull;
+
 import com.example.money_management_be.entity.UserEntity;
 import com.example.money_management_be.repository.UserRepository;
 import java.util.Optional;
@@ -18,7 +20,7 @@ public class UserQualifier {
 
     @Named("FromIdToUser")
     public UserEntity findUserById(Long id){
-        if (id != null) {
+        if (nonNull(id)) {
             Optional<UserEntity> userOptional = repository.findById(id);
             if (userOptional.isPresent()) {
                 return userOptional.get();

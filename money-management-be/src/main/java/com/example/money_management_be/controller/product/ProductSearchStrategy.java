@@ -22,7 +22,7 @@ public class ProductSearchStrategy implements SearchStrategy<QProductEntity> {
             predicateBuilder.andAnyOf(
                 qEntity.productType.name.containsIgnoreCase(criteria),
                 qEntity.productType.brand.containsIgnoreCase(criteria),
-                qEntity.productType.category.name.containsIgnoreCase(criteria)
+                qEntity.productType.productCategory.name.containsIgnoreCase(criteria)
             );
         }
         return predicateBuilder;

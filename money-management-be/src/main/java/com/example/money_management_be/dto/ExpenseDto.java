@@ -10,18 +10,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExpenseDto extends BaseDto {
 
-    ExpenseCategoryDto category;
-    ExpenseSubCategoryDto subCategory;
-    UserDto user;
+    String category;
+    String subCategory;
+    Long userId;
     LocalDate date;
     List<ProductDto> products;
     BigDecimal price;

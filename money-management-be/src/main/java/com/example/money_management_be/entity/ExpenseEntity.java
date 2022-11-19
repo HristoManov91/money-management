@@ -11,6 +11,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -22,18 +26,56 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"user", "store"})
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "expenses")
+@NamedEntityGraphs({
+    @NamedEntityGraph(
+        name = "join-all",
+        attributeNodes = {
+            @NamedAttributeNode("category"),
+            @NamedAttributeNode("subCategory"),
+            @NamedAttributeNode("user"),
+            @NamedAttributeNode(value = "store", subgraph = "store.address"),
+            @NamedAttributeNode(value = "products", subgraph = "products.productType")
+        },
+        subgraphs = {
+            @NamedSubgraph(
+                name = "store.address",
+                attributeNodes = @NamedAttributeNode("address")
+            ),
+            @NamedSubgraph(
+                name = "products.productType",
+                attributeNodes = @NamedAttributeNode(value = "productType", subgraph = "productType.productCategory")
+            ),
+            @NamedSubgraph(
+                name = "productType.productCategory",
+                attributeNodes = @NamedAttributeNode(value = "productCategory")
+            )
+        }
+    ),
+    @NamedEntityGraph(
+        name = "join-products",
+        attributeNodes = @NamedAttributeNode(value = "products", subgraph = "subgraph.product"),
+        subgraphs = {
+            @NamedSubgraph(
+                name = "subgraph.product",
+                attributeNodes = @NamedAttributeNode(value = "productType", subgraph = "subgraph.productType")
+            ),
+            @NamedSubgraph(
+                name = "subgraph.productType",
+                attributeNodes = @NamedAttributeNode(value = "productCategory")
+            )
+        }
+    )}
+)
 public class ExpenseEntity extends BaseEntity {
 
     @ManyToOne(
@@ -42,7 +84,6 @@ public class ExpenseEntity extends BaseEntity {
         optional = false,
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
-    @Fetch(FetchMode.JOIN)
     ExpenseCategoryEntity category;
 
     @ManyToOne(
@@ -51,7 +92,6 @@ public class ExpenseEntity extends BaseEntity {
         optional = false,
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
-    @Fetch(FetchMode.JOIN)
     ExpenseSubCategoryEntity subCategory;
 
     @Column(name = "date", nullable = false)
@@ -59,9 +99,9 @@ public class ExpenseEntity extends BaseEntity {
 
     @ManyToOne(
         targetEntity = UserEntity.class,
-        fetch = FetchType.LAZY,
+        fetch = FetchType.EAGER,
         optional = false,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
+        cascade = {CascadeType.MERGE, CascadeType.DETACH}
     )
     UserEntity user;
 
@@ -70,7 +110,6 @@ public class ExpenseEntity extends BaseEntity {
         fetch = FetchType.LAZY,
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
-    @Fetch(FetchMode.JOIN)
     List<ProductEntity> products;
 
     @Column(name = "price", scale = 2, nullable = false)
@@ -86,9 +125,8 @@ public class ExpenseEntity extends BaseEntity {
         targetEntity = StoreEntity.class,
         fetch = FetchType.EAGER,
         optional = false,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
+        cascade = {CascadeType.MERGE, CascadeType.DETACH}
     )
-    @Fetch(FetchMode.JOIN)
     StoreEntity store;
 
     @Override
@@ -114,16 +152,21 @@ public class ExpenseEntity extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getCategory().getId(), getSubCategory().getId(), getDate(), getUser().getId(), getPrice(),
-                            getDiscount(), getDescription(), getStore().getId());
+            getDiscount(), getDescription(), getStore().getId());
     }
 
     @PrePersist
     private void prePersist() {
-        if (nonNull(this.products)){
+
+        if (nonNull(this.products)) {
             this.products.forEach(p -> {
                 p.getProductType().setUser(this.user);
                 p.setDate(this.date);
             });
+        }
+
+        if (nonNull(this.category)) {
+            this.subCategory.setExpenseCategory(this.category);
         }
     }
 }

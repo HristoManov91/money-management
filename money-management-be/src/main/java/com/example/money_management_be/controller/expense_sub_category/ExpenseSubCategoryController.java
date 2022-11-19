@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/expense/sub-categories")
+@RequestMapping("/expenses/sub-categories")
 @Tag(name = "Expense sub categories", description = "Expense sub categories operations")
 public interface ExpenseSubCategoryController extends CrudController<ExpenseSubCategoryDto, ExpenseSubCategoryEntity> {
 

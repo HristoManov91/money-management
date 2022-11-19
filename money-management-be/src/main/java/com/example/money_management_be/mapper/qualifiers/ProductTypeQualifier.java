@@ -1,5 +1,7 @@
 package com.example.money_management_be.mapper.qualifiers;
 
+import static java.util.Objects.nonNull;
+
 import com.example.money_management_be.dto.ProductTypeDto;
 import com.example.money_management_be.entity.ProductCategoryEntity;
 import com.example.money_management_be.entity.ProductTypeEntity;
@@ -23,14 +25,17 @@ public class ProductTypeQualifier {
 
     @Named("FindProductType")
     public ProductTypeEntity findProductType(ProductTypeDto dto) {
-        if (dto.getName() != null && dto.getUserId() != null) {
-            Optional<ProductTypeEntity> productTypeOptional = repository.findByNameAndBrandAndUserId(dto.getName(), dto.getBrand(), dto.getUserId());
+        String name = dto.getName();
+        Long userId = dto.getUserId();
+
+        if (nonNull(name) && nonNull(userId)) {
+            Optional<ProductTypeEntity> productTypeOptional = repository.findByNameAndBrandAndUserId(name, dto.getBrand(), userId);
             if (productTypeOptional.isPresent()) {
                 return productTypeOptional.get();
             } else {
                 ProductCategoryEntity productCategory = productCategoryQualifier.fromNameAndUserId(dto);
-                UserEntity user = userQualifier.findUserById(dto.getUserId());
-                return new ProductTypeEntity(dto.getName(), dto.getBrand(), productCategory, user);
+                UserEntity user = userQualifier.findUserById(userId);
+                return new ProductTypeEntity(name, dto.getBrand(), productCategory, user);
             }
         }
 

@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -16,18 +18,22 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"user"})
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "stores")
+@NamedEntityGraph(
+    name = "join-address",
+    attributeNodes = {
+        @NamedAttributeNode("address")
+    }
+)
 public class StoreEntity extends BaseEntity {
 
     @Column(name = "name", length = 100, nullable = false)
@@ -38,14 +44,13 @@ public class StoreEntity extends BaseEntity {
         fetch = FetchType.EAGER,
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
-    @Fetch(FetchMode.JOIN)
     AddressEntity address;
 
     @ManyToOne(
         targetEntity = UserEntity.class,
         fetch = FetchType.LAZY,
         optional = false,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
+        cascade = {CascadeType.MERGE, CascadeType.DETACH}
     )
     UserEntity user;
 

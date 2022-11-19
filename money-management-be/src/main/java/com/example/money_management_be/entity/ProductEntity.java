@@ -35,14 +35,14 @@ import lombok.experimental.SuperBuilder;
     attributeNodes = {
         @NamedAttributeNode(
             value = "productType",
-            subgraph = "productType.category"
+            subgraph = "productType.productCategory"
         )
     },
     subgraphs = {
         @NamedSubgraph(
-            name = "productType.category",
+            name = "productType.productCategory",
             attributeNodes = {
-                @NamedAttributeNode("category")
+                @NamedAttributeNode("productCategory")
             }
         )
     }

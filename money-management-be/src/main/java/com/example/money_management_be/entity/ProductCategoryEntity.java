@@ -15,14 +15,12 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"user"})
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -36,7 +34,7 @@ public class ProductCategoryEntity extends BaseEntity {
         targetEntity = UserEntity.class,
         optional = false,
         fetch = FetchType.LAZY,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
+        cascade = {CascadeType.MERGE, CascadeType.DETACH}
     )
     UserEntity user;
 

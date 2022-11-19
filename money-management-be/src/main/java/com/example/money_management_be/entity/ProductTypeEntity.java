@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"user"})
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -33,7 +33,7 @@ import lombok.experimental.SuperBuilder;
 @NamedEntityGraph(
     name = "join-category",
     attributeNodes = {
-        @NamedAttributeNode("category")
+        @NamedAttributeNode("productCategory")
     }
 )
 public class ProductTypeEntity extends BaseEntity {
@@ -50,13 +50,13 @@ public class ProductTypeEntity extends BaseEntity {
         optional = false,
         cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
     )
-    ProductCategoryEntity category;
+    ProductCategoryEntity productCategory;
 
     @ManyToOne(
         targetEntity = UserEntity.class,
         fetch = FetchType.LAZY,
         optional = false,
-        cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH}
+        cascade = {CascadeType.MERGE, CascadeType.DETACH}
     )
     UserEntity user;
 
@@ -71,19 +71,19 @@ public class ProductTypeEntity extends BaseEntity {
         ProductTypeEntity that = (ProductTypeEntity) o;
         return Objects.equals(getName(), that.getName())
             && Objects.equals(getBrand(), that.getBrand())
-            && Objects.equals(getCategory().getId(), that.getCategory().getId())
+            && Objects.equals(getProductCategory().getId(), that.getProductCategory().getId())
             && Objects.equals(getUser().getId(), that.getUser().getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getBrand(), getCategory().getId(), getUser().getId());
+        return Objects.hash(getName(), getBrand(), getProductCategory().getId(), getUser().getId());
     }
 
     @PrePersist
     private void prePersist() {
-        if (nonNull(this.category) && this.category.getUser() == null){
-            this.category.setUser(this.getUser());
+        if (nonNull(this.getProductCategory()) && this.getProductCategory().getUser() == null) {
+            this.getProductCategory().setUser(this.getUser());
         }
     }
 }

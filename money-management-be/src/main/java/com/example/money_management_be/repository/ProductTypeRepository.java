@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductTypeRepository extends BaseRepository<ProductTypeEntity, Long> {
 
-    @EntityGraph(value = "join-category")
+    @EntityGraph(value = "join-pCategory")
     Optional<ProductTypeEntity> findByNameAndBrandAndUserId(String name, String brand, Long userId);
 
-    @EntityGraph(value = "join-category")
+    @EntityGraph(value = "join-pCategory")
     Page<ProductTypeEntity> findAll(Predicate predicate, Pageable pageable);
 }

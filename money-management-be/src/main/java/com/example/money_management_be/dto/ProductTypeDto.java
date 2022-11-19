@@ -7,18 +7,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductTypeDto extends BaseDto {
 
     //TODO validations
     String name;
     String brand;
-    String category;
+    String productCategory;
     Long userId;
 }
