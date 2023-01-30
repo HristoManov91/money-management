@@ -10,8 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExpenseRepository extends BaseRepository<ExpenseEntity, Long> {
 
-    @EntityGraph(attributePaths = {"products", "products.productType", "products.productType.productCategory", "category", "user", "store", "store.address",
-        "subCategory"})
-//    @EntityGraph(value = "join-all")
+//    @EntityGraph(attributePaths = {"category", "user", "store", "store.address", "subCategory"})
+    @EntityGraph(value = "join-all")
     Page<ExpenseEntity> findAll(Predicate predicate, Pageable pageable);
 }

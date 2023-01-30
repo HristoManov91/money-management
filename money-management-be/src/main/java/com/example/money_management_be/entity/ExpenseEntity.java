@@ -36,45 +36,29 @@ import lombok.experimental.SuperBuilder;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "expenses")
-@NamedEntityGraphs({
-    @NamedEntityGraph(
-        name = "join-all",
-        attributeNodes = {
-            @NamedAttributeNode("category"),
-            @NamedAttributeNode("subCategory"),
-            @NamedAttributeNode("user"),
-            @NamedAttributeNode(value = "store", subgraph = "store.address"),
-            @NamedAttributeNode(value = "products", subgraph = "products.productType")
-        },
-        subgraphs = {
-            @NamedSubgraph(
-                name = "store.address",
-                attributeNodes = @NamedAttributeNode("address")
-            ),
-            @NamedSubgraph(
-                name = "products.productType",
-                attributeNodes = @NamedAttributeNode(value = "productType", subgraph = "productType.productCategory")
-            ),
-            @NamedSubgraph(
-                name = "productType.productCategory",
-                attributeNodes = @NamedAttributeNode(value = "productCategory")
-            )
-        }
-    ),
-    @NamedEntityGraph(
-        name = "join-products",
-        attributeNodes = @NamedAttributeNode(value = "products", subgraph = "subgraph.product"),
-        subgraphs = {
-            @NamedSubgraph(
-                name = "subgraph.product",
-                attributeNodes = @NamedAttributeNode(value = "productType", subgraph = "subgraph.productType")
-            ),
-            @NamedSubgraph(
-                name = "subgraph.productType",
-                attributeNodes = @NamedAttributeNode(value = "productCategory")
-            )
-        }
-    )}
+@NamedEntityGraph(
+    name = "join-all",
+    attributeNodes = {
+        @NamedAttributeNode("category"),
+        @NamedAttributeNode("subCategory"),
+        @NamedAttributeNode("user"),
+        @NamedAttributeNode(value = "store", subgraph = "store.address"),
+        @NamedAttributeNode(value = "products", subgraph = "products.productType")
+    },
+    subgraphs = {
+        @NamedSubgraph(
+            name = "store.address",
+            attributeNodes = @NamedAttributeNode("address")
+        ),
+        @NamedSubgraph(
+            name = "products.productType",
+            attributeNodes = @NamedAttributeNode(value = "productType", subgraph = "productType.productCategory")
+        ),
+        @NamedSubgraph(
+            name = "productType.productCategory",
+            attributeNodes = @NamedAttributeNode(value = "productCategory")
+        )
+    }
 )
 public class ExpenseEntity extends BaseEntity {
 
