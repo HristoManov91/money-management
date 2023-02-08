@@ -13,7 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -31,7 +30,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"user", "store"})
+@ToString(exclude = {"user"})
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -42,14 +41,9 @@ import lombok.experimental.SuperBuilder;
         @NamedAttributeNode("category"),
         @NamedAttributeNode("subCategory"),
         @NamedAttributeNode("user"),
-        @NamedAttributeNode(value = "store", subgraph = "store.address"),
         @NamedAttributeNode(value = "products", subgraph = "products.productType")
     },
     subgraphs = {
-        @NamedSubgraph(
-            name = "store.address",
-            attributeNodes = @NamedAttributeNode("address")
-        ),
         @NamedSubgraph(
             name = "products.productType",
             attributeNodes = @NamedAttributeNode(value = "productType", subgraph = "productType.productCategory")
@@ -102,16 +96,11 @@ public class ExpenseEntity extends BaseEntity {
     @Column(name = "discount", scale = 2)
     BigDecimal discount;
 
-    @Column(name = "description", length = 500)
+    @Column(name = "description", length = 100)
     String description;
 
-    @ManyToOne(
-        targetEntity = StoreEntity.class,
-        fetch = FetchType.EAGER,
-        optional = false,
-        cascade = {CascadeType.MERGE, CascadeType.DETACH}
-    )
-    StoreEntity store;
+    @Column(name = "store_name", length = 50)
+    String storeName;
 
     @Override
     public boolean equals(Object o) {
@@ -129,14 +118,13 @@ public class ExpenseEntity extends BaseEntity {
             && Objects.equals(getUser().getId(), that.getUser().getId())
             && Objects.equals(getPrice(), that.getPrice())
             && Objects.equals(getDiscount(), that.getDiscount())
-            && Objects.equals(getDescription(), that.getDescription())
-            && Objects.equals(getStore().getId(), that.getStore().getId());
+            && Objects.equals(getDescription(), that.getDescription());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getCategory().getId(), getSubCategory().getId(), getDate(), getUser().getId(), getPrice(),
-            getDiscount(), getDescription(), getStore().getId());
+            getDiscount(), getDescription(), getStoreName());
     }
 
     @PrePersist

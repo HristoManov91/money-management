@@ -63,17 +63,14 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "price_discount", scale = 2)
     BigDecimal priceDiscount;
 
-    @Column(name = "percent_discount", scale = 2)
-    BigDecimal percentDiscount;
-
     @Column(name = "price_after_discount", nullable = false, scale = 2)
     BigDecimal priceAfterDiscount;
 
     @Column(name = "quantity", nullable = false, scale = 2)
     BigDecimal quantity;
 
-    @Column(name = "total_price", nullable = false, scale = 2)
-    BigDecimal totalPrice;
+    @Column(name = "final_price", nullable = false, scale = 2)
+    BigDecimal finalPrice;
 
     @Column(name = "date", nullable = false)
     LocalDate date;

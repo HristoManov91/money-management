@@ -24,7 +24,6 @@ import lombok.experimental.SuperBuilder;
 public class UserDto extends BaseDto {
 
     //TODO validations
-    String username;
     String password;
     String fullName;
     LocalDate dateOfBirth;

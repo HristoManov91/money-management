@@ -29,6 +29,6 @@ public class ExpenseCategoryQualifier {
             Optional<ExpenseCategoryEntity> optionalExpenseCategory = repository.findByNameAndUserId(name, userId);
             return optionalExpenseCategory.orElseGet(() -> new ExpenseCategoryEntity(name, userRepository.findById(userId).get()));
         }
-        return null;
+        return ExpenseCategoryEntity.builder().name(name).build();
     }
 }

@@ -21,8 +21,7 @@ public class UserSearchStrategy implements SearchStrategy<QUserEntity> {
         if (nonNull(criteria)) {
             predicateBuilder.andAnyOf(
                 qEntity.email.containsIgnoreCase(criteria),
-                qEntity.fullName.containsIgnoreCase(criteria),
-                qEntity.username.containsIgnoreCase(criteria)
+                qEntity.fullName.containsIgnoreCase(criteria)
             );
         }
 

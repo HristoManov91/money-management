@@ -14,11 +14,14 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@CrossOrigin(origins = "http://localhost:8080/")
 @RequiredArgsConstructor
 public class ExpenseControllerImpl implements ExpenseController {
 
@@ -37,5 +40,14 @@ public class ExpenseControllerImpl implements ExpenseController {
 
         SearchStrategy<?> searchStrategy = SearchEnum.EXPENSE.getSearchStrategy();
         return ResponseEntity.ok().body(service.findAll(searchStrategy.getCustomPredicate(predicate, criteria), pageable));
+    }
+
+    @Override
+    public ResponseEntity<ExpenseDto> save(ExpenseDto dto) {
+        //TODO get from session
+        dto.setUserId(1L);
+        ExpenseDto save = service.save(dto);
+        //TODO to make it not return the object
+        return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 }

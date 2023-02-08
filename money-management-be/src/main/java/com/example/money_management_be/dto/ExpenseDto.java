@@ -29,5 +29,5 @@ public class ExpenseDto extends BaseDto {
     BigDecimal price;
     BigDecimal discount;
     String description;
-    StoreDto store;
+    String storeName;
 }

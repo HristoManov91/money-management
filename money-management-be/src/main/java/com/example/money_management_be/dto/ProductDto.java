@@ -1,5 +1,6 @@
 package com.example.money_management_be.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.AccessLevel;
@@ -24,9 +25,9 @@ public class ProductDto extends BaseDto {
     ProductTypeDto productType;
     BigDecimal standardPrice;
     BigDecimal priceDiscount;
-    BigDecimal percentDiscount;
     BigDecimal priceAfterDiscount;
     BigDecimal quantity;
-    BigDecimal totalPrice;
+    BigDecimal finalPrice;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDate date;
 }

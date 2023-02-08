@@ -30,9 +30,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
-    @Column(name = "username", nullable = false, length = 50, unique = true)
-    String username;
-
     @Column(name = "password", nullable = false)
     String password;
 
@@ -63,7 +60,6 @@ public class UserEntity extends BaseEntity {
         }
         UserEntity that = (UserEntity) o;
         return Objects.equals(getId(), that.getId())
-            && Objects.equals(getUsername(), that.getUsername())
             && Objects.equals(getPassword(), that.getPassword())
             && Objects.equals(getFullName(), that.getFullName())
             && Objects.equals(getDateOfBirth(), that.getDateOfBirth())
@@ -74,6 +70,6 @@ public class UserEntity extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getPassword(), getFullName(), getDateOfBirth(), getEmail(), getGender(), getCreateDate());
+        return Objects.hash(getId(), getPassword(), getFullName(), getDateOfBirth(), getEmail(), getGender(), getCreateDate());
     }
 }

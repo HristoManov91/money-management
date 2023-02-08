@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true),
-    uses = {StoreMapper.class,
+    uses = {
         ProductTypeMapper.class,
         ExpenseCategoryQualifier.class,
         ExpenseSubCategoryQualifier.class,

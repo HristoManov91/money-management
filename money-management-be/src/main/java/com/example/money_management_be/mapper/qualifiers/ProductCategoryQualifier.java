@@ -29,6 +29,6 @@ public class ProductCategoryQualifier {
             Optional<ProductCategoryEntity> userOptional = repository.findByNameAndUserId(categoryName, userId);
             return userOptional.orElseGet(() -> new ProductCategoryEntity(categoryName, userRepository.findById(userId).get()));
         }
-        return null;
+        return ProductCategoryEntity.builder().name(categoryName).build();
     }
 }

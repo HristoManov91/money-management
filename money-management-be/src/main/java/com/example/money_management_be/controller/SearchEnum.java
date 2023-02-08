@@ -6,7 +6,6 @@ import com.example.money_management_be.controller.expense_sub_category.ExpenseSu
 import com.example.money_management_be.controller.product.ProductSearchStrategy;
 import com.example.money_management_be.controller.product_category.ProductCategorySearchStrategy;
 import com.example.money_management_be.controller.product_type.ProductTypeSearchStrategy;
-import com.example.money_management_be.controller.store.StoreSearchStrategy;
 import com.example.money_management_be.controller.user.UserSearchStrategy;
 import javax.annotation.PostConstruct;
 import lombok.AccessLevel;
@@ -40,12 +39,6 @@ public enum SearchEnum implements SearchType {
             return expenseSubCategorySearchStrategy;
         }
     },
-    STORE {
-        @Override
-        public SearchStrategy<?> getSearchStrategy() {
-            return storeSearchStrategy;
-        }
-    },
     PRODUCT {
         @Override
         public SearchStrategy<?> getSearchStrategy() {
@@ -69,7 +62,6 @@ public enum SearchEnum implements SearchType {
     private static ExpenseSearchStrategy expenseSearchStrategy;
     private static ExpenseCategorySearchStrategy expenseCategorySearchStrategy;
     private static ExpenseSubCategorySearchStrategy expenseSubCategorySearchStrategy;
-    private static StoreSearchStrategy storeSearchStrategy;
     private static ProductSearchStrategy productSearchStrategy;
     private static ProductTypeSearchStrategy productTypeSearchStrategy;
     private static ProductCategorySearchStrategy productCategorySearchStrategy;
@@ -79,7 +71,6 @@ public enum SearchEnum implements SearchType {
     @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
     public static class SearchStrategyInjector {
 
-        StoreSearchStrategy storeSearchStrategy;
         UserSearchStrategy userSearchStrategy;
         ExpenseSearchStrategy expenseSearchStrategy;
         ExpenseCategorySearchStrategy expenseCategorySearchStrategy;
@@ -94,7 +85,6 @@ public enum SearchEnum implements SearchType {
             SearchEnum.expenseSearchStrategy = expenseSearchStrategy;
             SearchEnum.expenseCategorySearchStrategy = expenseCategorySearchStrategy;
             SearchEnum.expenseSubCategorySearchStrategy = expenseSubCategorySearchStrategy;
-            SearchEnum.storeSearchStrategy = storeSearchStrategy;
             SearchEnum.productSearchStrategy = productSearchStrategy;
             SearchEnum.productTypeSearchStrategy = productTypeSearchStrategy;
             SearchEnum.productCategorySearchStrategy = productCategorySearchStrategy;

@@ -29,4 +29,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public ResourceEntityTransformer<ProductCategoryDto, ProductCategoryEntity> resourceTransformer() {
         return mapper;
     }
+
+    //TODO cron job for delete duplicate categories
 }
