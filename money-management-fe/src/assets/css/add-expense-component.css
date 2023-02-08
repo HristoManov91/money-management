@@ -1,0 +1,15 @@
+div.grid {
+    display: grid;
+    grid-template-columns: 25% 25% 50%;
+    position: relative;
+}
+
+div form label,
+div form input,
+div form textarea {
+    text-align: start;
+    font-size: 1rem;
+    display: block;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
