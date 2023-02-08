@@ -1,0 +1,49 @@
+<template>
+  <div>
+    <nav>
+      <ul>
+        <router-link class="router" :to="{name: 'AddExpense'}">Add Expense</router-link>
+      </ul>
+    </nav>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "NavigationComponents"
+}
+</script>
+
+<style scoped>
+
+header nav {
+  background-color: green;
+  height: 3rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header nav ul {
+  display: flex;
+  justify-content: space-around;
+}
+
+.router {
+  font-size: 1.2rem;
+  color: white;
+  display: inline-block;
+  margin: 0 0.5rem;
+  padding: 0.4rem;
+  border-radius: 3px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+header nav li:hover {
+  cursor: pointer;
+  color: orange;
+}
+
+</style>
