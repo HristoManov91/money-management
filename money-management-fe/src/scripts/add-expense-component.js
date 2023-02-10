@@ -1,5 +1,5 @@
 import {ExpenseService} from "@/services/expense";
-import {maxLength, required, between} from "vuelidate/lib/validators";
+import {maxLength, minLength, maxValue, minValue, required} from "vuelidate/lib/validators";
 
 export default {
     name: "AddExpenseComponent",
@@ -30,57 +30,80 @@ export default {
             },
         }
     },
-    // TODO validations
     validations: {
         expense: {
             category: {
-                required
+                required,
+                minLength: minLength(2),
+                maxLength: maxLength(50)
             },
             subCategory: {
-                maxLength: maxLength(30)
+                minLength: minLength(2),
+                maxLength: maxLength(50)
             },
             storeName: {
-                maxLength: maxLength(30)
+                minLength: minLength(2),
+                maxLength: maxLength(50)
             },
             date: {
-                required
+                required,
+                //TODO past or present validation
             },
             price: {
-                required
+                required,
+                minValue: minValue (0.01),
+                maxValue: maxValue (1000000)
             },
             discount: {
-                between: between(0,100)
+                minValue: minValue (0),
+                maxValue: maxValue (1000000)
             },
             description: {
                 maxLength: maxLength(100)
+            },
+            products: {
+                maxLength: maxLength(50)
             }
         },
         product: {
             productType: {
                 name: {
-                    required
+                    required,
+                    minLength: minLength(2),
+                    maxLength: maxLength(50)
                 },
                 brand: {
-                    maxLength: maxLength(30)
+                    maxLength: maxLength(50)
                 },
                 productCategory: {
-                    required
+                    required,
+                    minLength: minLength(2),
+                    maxLength: maxLength(50)
                 }
             },
             standardPrice: {
-                required
+                required,
+                minValue: minValue(0.01),
+                maxValue: maxValue(1000000)
             },
             priceDiscount: {
-                required
+                minValue: minValue (0),
+                maxValue: maxValue (1000000)
             },
             priceAfterDiscount: {
-                required
+                required,
+                minValue: minValue(0.01),
+                maxValue: maxValue(1000000)
             },
             quantity: {
-                required
+                required,
+                minValue: minValue(0.001),
+                maxValue: maxValue(1000000)
             },
             finalPrice: {
-                required
+                required,
+                minValue: minValue(0.01),
+                maxValue: maxValue(1000000)
             }
         }
     },
@@ -89,8 +112,8 @@ export default {
             this.$v.expense.$touch();
             if (this.$v.expense.$invalid) {
                 // TODO not valid
-                console.log(this.$v.expense)
                 alert("Error expense")
+                console.log('product',this.$v.product)
             } else {
                 this.expenseService.addExpense(this.expense).then((response) => {
                     if (response.status === 'OK') {
@@ -108,9 +131,9 @@ export default {
             this.$v.product.$touch();
             if (this.$v.product.$invalid) {
                 // TODO not valid
+
                 alert("Error product")
             } else {
-
                 let copy = JSON.parse(JSON.stringify(this.product))
                 this.expense.products.push(copy)
                 this.productClearFields();
@@ -125,6 +148,7 @@ export default {
             this.product.quantity = null;
             this.product.standardPrice = null;
             this.product.finalPrice = null;
+            this.$v.product.$reset();
         },
         clearExpense() {
             this.expense.category = null;
@@ -135,6 +159,7 @@ export default {
             this.expense.price = null;
             this.expense.description = null;
             this.expense.storeName = null;
+            this.$v.expense.$reset();
         },
         productSetFinalPrice() {
             if (this.product.priceAfterDiscount !== null && this.product.priceAfterDiscount !== ''

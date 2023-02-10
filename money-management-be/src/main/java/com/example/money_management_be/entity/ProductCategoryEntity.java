@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "products_categories")
 public class ProductCategoryEntity extends BaseEntity {
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 100)
     String name;
 
     @ManyToOne(

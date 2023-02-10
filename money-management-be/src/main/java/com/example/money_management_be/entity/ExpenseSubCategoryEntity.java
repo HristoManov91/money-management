@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "expenses_sub_categories")
 public class ExpenseSubCategoryEntity extends BaseEntity {
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
 
     @ManyToOne(

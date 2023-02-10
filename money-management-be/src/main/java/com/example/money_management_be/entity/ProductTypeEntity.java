@@ -38,10 +38,10 @@ import lombok.experimental.SuperBuilder;
 )
 public class ProductTypeEntity extends BaseEntity {
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 100)
     String name;
 
-    @Column(name = "brand", length = 50)
+    @Column(name = "brand", length = 100)
     String brand;
 
     @ManyToOne(

@@ -96,10 +96,10 @@ public class ExpenseEntity extends BaseEntity {
     @Column(name = "discount", scale = 2)
     BigDecimal discount;
 
-    @Column(name = "description", length = 100)
+    @Column(name = "description")
     String description;
 
-    @Column(name = "store_name", length = 50)
+    @Column(name = "store_name", length = 100)
     String storeName;
 
     @Override

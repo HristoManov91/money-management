@@ -12,4 +12,23 @@ div form textarea {
     display: block;
     margin: 0.5rem;
     padding: 0.5rem;
+    width: 90%;
+}
+
+span.errorMessage {
+    font-size: 0.75rem;
+    display: block;
+    color: #D8000C;
+    letter-spacing: 0.07rem;
+    padding: 0.3rem;
+    text-align: center;
+    background-color: #FFBABA;
+    border-radius: 0.3rem;
+    border: 0.1rem solid #D8000C;
+    margin: 0.5rem;
+    width: 90%;
+}
+
+.invalidFiled {
+    border: 3px solid red;
 }
