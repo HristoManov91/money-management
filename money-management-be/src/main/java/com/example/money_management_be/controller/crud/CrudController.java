@@ -10,10 +10,12 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Validated
+@CrossOrigin(origins = "http://localhost:8080/")
 public interface CrudController<D extends BaseDto, E extends BaseEntity> extends ReadController<D, E>, EditController<D, E>, DeleteController<D, E> {
 
     @Operation(summary = "Create a new Object", description = "Create a new Object from DTO object")

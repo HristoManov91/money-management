@@ -3,11 +3,15 @@ package com.example.money_management_be.entity;
 import com.example.money_management_be.entity.enums.GenderEnum;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -45,6 +49,13 @@ public class UserEntity extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "gender", nullable = false, length = 10)
     GenderEnum gender;
+
+    @ManyToMany(
+        targetEntity = UserRoleEntity.class,
+        fetch = FetchType.EAGER,
+        cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST}
+    )
+    List<UserRoleEntity> roles;
 
     @CreationTimestamp
     @Column(name = "create_date", updatable = false, nullable = false, columnDefinition = "timestamp(0)")

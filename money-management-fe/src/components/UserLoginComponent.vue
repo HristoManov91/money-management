@@ -13,7 +13,7 @@
         <span v-if="$v.user.email.$dirty && !$v.user.email.required" class="errorMessage">
           Имейла е задължителен!
         </span>
-          <span v-if="$v.user.email.$dirty && !$v.user.email.required" class="errorMessage">
+          <span v-if="!$v.user.email.email" class="errorMessage">
           Невалидан имейл!
         </span>
           <span v-else-if="!$v.user.email.minLength || !$v.user.email.maxLength" class="errorMessage">
@@ -39,7 +39,7 @@
       </form>
     </div>
     <modal name="messageModal" :shiftX="1" :shiftY="0" :height="0" :width="0">
-      <MessageModal :message="this.message" :messageClass="this.messageClass"/>
+      <MessageModal :message="this.modal.message" :messageClass="this.modal.messageClass"/>
     </modal>
   </div>
 </template>

@@ -1,5 +1,5 @@
 import {email, maxLength, minLength, required} from "vuelidate/lib/validators";
-import MessageModal from "@/components/MessageModal.vue";
+import MessageModal from "@/components/modal/MessageModal.vue";
 
 export default {
     name: "UserLoginComponent",
@@ -12,8 +12,10 @@ export default {
                 email: null,
                 password: null
             },
-            message: null,
-            messageClass: null
+            modal: {
+                message: null,
+                messageClass: null
+            }
         }
     },
     validations: {
@@ -42,8 +44,8 @@ export default {
             this.$v.$touch();
 
             if (this.$v.$invalid) {
-                this.message = 'Моля попълнете формата коректно!';
-                this.messageClass = 'errorMessage';
+                this.modal.message = 'Моля попълнете формата коректно!';
+                this.modal.messageClass = 'errorMessage';
 
                 this.showMessageModal();
                 setTimeout(() => {
@@ -56,8 +58,8 @@ export default {
                         this.$router.push({name: 'Home'});
                     },
                     error => {
-                        this.message = error.response.data;
-                        this.messageClass = 'errorMessage';
+                        this.modal.message = error.response.data;
+                        this.modal.messageClass = 'errorMessage';
 
                         this.showMessageModal();
                         setTimeout(() => {

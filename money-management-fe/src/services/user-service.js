@@ -21,7 +21,7 @@ class UserService {
     async register(user){
         let response = {};
 
-        await axios.post(USER_CONTROLLER_BASE_URL, user).then(() => {
+        await axios.post(USER_CONTROLLER_BASE_URL + 'register', user).then(() => {
             response.status = 'OK'
             console.log('ok')
         }).catch((err) => {
