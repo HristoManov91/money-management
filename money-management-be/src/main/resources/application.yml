@@ -1,6 +1,13 @@
+# ===============================
+# CHANGE SERVER PORT
+# ===============================
 server:
   port: 8081
+
 spring:
+  # ===============================
+  # DATABASE CONNECTION
+  # ===============================
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/${POSTGRESQL_DATABASE}
@@ -9,6 +16,9 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
+  # ===============================
+  # JPA / HIBERNATE
+  # ===============================
   jpa:
     hibernate:
       ddl-auto: none
@@ -27,9 +37,19 @@ spring:
 #  sql:
 #    init:
 #      mode: never
+
+# ===============================
+# LOGGING
+# ===============================
 logging:
+  file:
+    name: ./logs/money-management-be.log
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# ===============================
+# JWT
+# ===============================
 jwt:
   secret: ${JWT_SECRET}
