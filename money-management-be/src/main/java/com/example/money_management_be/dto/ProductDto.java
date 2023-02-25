@@ -3,6 +3,7 @@ package com.example.money_management_be.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -25,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 public class ProductDto extends BaseDto {
 
     @NotNull
+    @Valid
     ProductTypeDto productType;
 
     @NotNull

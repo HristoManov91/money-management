@@ -15,12 +15,14 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     UserRepository repository;
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean registerUser(UserDto userDto) {
-
+        UserEntity userEntity = mapper.transformToEntity(userDto);
         UserEntity user =
             UserEntity.builder()
                 .email(userDto.getEmail())
@@ -52,6 +54,8 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         repository.save(user);
+
+        log.info("Register user successfully.");
 
         return true;
     }

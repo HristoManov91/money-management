@@ -76,6 +76,7 @@ export default {
                     if (resp.status === 'OK') {
                         this.$router.push({name: 'Login'})
                     } else {
+                        console.log('resp', resp);
                         this.modal.message = resp.message;
                         this.modal.messageClass = 'errorMessage';
 

@@ -161,9 +161,9 @@
   </div>
 </template>
 
-<script src="../scripts/add-expense-component.js"></script>
+<script src="../scripts/add-expense.js"></script>
 
 <style scoped>
-@import url("../assets/css/add-expense-component.css");
+  @import url("../assets/css/add-expense.css");
 
 </style>

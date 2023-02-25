@@ -1,6 +1,7 @@
-package com.example.money_management_be.security;
+package com.example.money_management_be.config;
 
 import com.example.money_management_be.repository.UserRepository;
+import com.example.money_management_be.security.AppUserDetailsService;
 import com.example.money_management_be.security.jwt.JwtTokenFilter;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
@@ -61,40 +62,6 @@ public class SecurityConfig {
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-        //        http
-//            .cors().and().csrf().disable()
-//            // define which requests are allowed and which not
-//            .authorizeRequests()
-//            // everyone can download static resources (css, js, images)
-//            //.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-//            // everyone can login and register
-//            .antMatchers("/", "/users/**").permitAll()
-//            // all other pages are available for logger in users
-//            .anyRequest()
-//                .authenticated()
-//            .and()
-//            // configuration of form login
-//                .formLogin()
-//            // the custom login form
-//                .loginPage("/users/login")
-//            // the name of the username form field
-//                .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-//            // the name of the password form field
-//                .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-//            // where to go in case that the login is successful
-//                .defaultSuccessUrl("/")
-//            // where to go in case that the login failed
-//                .failureForwardUrl("/")
-//            .and()
-//            // configure logut
-//                .logout()
-//            // which is the logout url, must be POST request
-//                .logoutUrl("/users/logout")
-//            // on logout go to the home page
-//                .logoutSuccessUrl("/")
-//            // invalidate the session and delete the cookies
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID");
     }
 
     @Bean

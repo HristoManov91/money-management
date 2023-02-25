@@ -6,8 +6,10 @@ class UserService {
 
     login(user) {
         return axios.post(USER_CONTROLLER_BASE_URL + 'login' , user).then((resp) => {
+            console.log('resp', resp)
             if (resp.data.accessToken){
                 localStorage.setItem('user' , JSON.stringify(resp.data))
+                console.log('localStorage', localStorage)
             }
 
             return resp.data;
@@ -25,9 +27,7 @@ class UserService {
             response.status = 'OK'
             console.log('ok')
         }).catch((err) => {
-            console.log('error')
-            response.status = 'ERROR'
-            response.message = err.response.data;
+            console.log('error', err)
         })
 
         return response;

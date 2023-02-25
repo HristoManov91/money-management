@@ -1,5 +1,6 @@
 package com.example.money_management_be.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -23,5 +24,6 @@ public class ExpenseSubCategoryDto extends BaseDto {
     @NotBlank
     @Size(min = 2, max = 50)
     String name;
+    @Valid
     ExpenseCategoryDto expenseCategory;
 }

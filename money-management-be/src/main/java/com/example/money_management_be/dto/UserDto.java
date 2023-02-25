@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,6 +50,9 @@ public class UserDto extends BaseDto {
 
     @NotBlank
     String gender;
+
+    //Custom validation
+    List<String> roles;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime createDate;

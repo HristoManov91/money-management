@@ -2,6 +2,7 @@ package com.example.money_management_be.service;
 
 import com.example.money_management_be.dto.BaseDto;
 import com.example.money_management_be.entity.BaseEntity;
+import com.example.money_management_be.exception.exceptionClasses.ResourceNotFoundException;
 import com.example.money_management_be.mapper.ResourceEntityTransformer;
 import com.example.money_management_be.repository.BaseRepository;
 import com.querydsl.core.types.Predicate;
@@ -18,22 +19,15 @@ public interface CrudService<D extends BaseDto, E extends BaseEntity> {
     ResourceEntityTransformer<D, E> resourceTransformer();
 
     default D save(D dto) {
-        //TODO to pass UserEntity as well
-        E e = resourceTransformer().transformToEntity(dto);
-        E save = repository().save(e);
-        D d = resourceTransformer().transformToResource(save);
-        return d;
-        //return resourceTransformer().transformToResource(repository().save(resourceTransformer().transformToEntity(dto)));
+        return resourceTransformer().transformToResource(repository().save(resourceTransformer().transformToEntity(dto)));
     }
 
     default D saveAndFlush(D dto) {
         Optional<E> entityOpt = repository().findById(dto.getId());
 
         if (entityOpt.isEmpty()) {
-            //TODO throw ResourceNotFoundException
+            throw new ResourceNotFoundException("id", dto.getId().toString());
         }
-
-        //TODO check createDate if change in BaseEntity
 
         return resourceTransformer().transformToResource(entityOpt.get());
     }
@@ -43,8 +37,7 @@ public interface CrudService<D extends BaseDto, E extends BaseEntity> {
     }
 
     default D findById(Long id) {
-        //TODO ResourceNotFoundException
-        E entity = repository().findById(id).orElseThrow(() -> new IllegalArgumentException(id.toString()));
+        E entity = repository().findById(id).orElseThrow(() -> new ResourceNotFoundException("id", id.toString()));
         return resourceTransformer().transformToResource(entity);
     }
 
@@ -62,8 +55,7 @@ public interface CrudService<D extends BaseDto, E extends BaseEntity> {
             repository().deleteById(id);
         }
 
-        //TODO ResourceNotFoundException
-        return resourceTransformer().transformToResource(optionalE.orElseThrow(() -> new IllegalArgumentException(id.toString())));
+        return resourceTransformer().transformToResource(optionalE.orElseThrow(() -> new ResourceNotFoundException("id", id.toString())));
     }
 
     @Transactional

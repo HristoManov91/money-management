@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -41,7 +42,7 @@ public class ExpenseDto extends BaseDto {
     LocalDate date;
 
     @Size(max = 50)
-    List<ProductDto> products;
+    List<@Valid ProductDto> products;
     @NotNull
     @Positive
     @DecimalMax("1000000")

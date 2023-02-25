@@ -3,7 +3,7 @@ export default {
     methods: {
         logOut() {
             this.$store.dispatch('authenticate/logout');
-            this.$router.push({name: 'home'});
+            this.$router.push({name: 'Home'});
         }
     },
     computed: {

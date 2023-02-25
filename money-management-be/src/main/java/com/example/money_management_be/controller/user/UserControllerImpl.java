@@ -53,7 +53,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDto userDto) {
+    public ResponseEntity<?> loginUser(@Valid @RequestBody UserLoginDto userDto) {
 
         try {
             Authentication authenticate = authManager.authenticate(
@@ -72,7 +72,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Boolean> registerUser(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity<Boolean> registerUser(@Valid @RequestBody UserDto userDto) {
         boolean result = service.registerUser(userDto);
 
         return new ResponseEntity<>(result, result ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
