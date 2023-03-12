@@ -18,3 +18,5 @@ The idea of the application is to be able to organize and optimize your family b
 - Querydsl
 
 - Lombok
+
+- Vue 3
